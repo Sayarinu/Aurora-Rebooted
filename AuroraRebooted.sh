@@ -1,6 +1,10 @@
-# cool-retro-term
-# sox
-# figlet
+RESET='\033[0m'
+ITALIC='\033[3m'
+AURORA='\033[0;31m'
+RAVEN='\033[0;34m'
+#    (play VoiceOfNoReturn.wav vol 1dB > /dev/null 2>&1 &)
+# killall play
+
 select_option() {
     ESC=$( printf "\033")
     cursor_blink_on()  { printf "$ESC[?25h"; }
@@ -69,8 +73,9 @@ select_option() {
 
 typing_standard() {
     text="$1"
+    color="$2"
     for (( i=0; i<${#text}; i++ )); do
-        echo -n "${text:$i:1}"
+        echo -en "${color}${text:$i:1}${RESET}"
         play_standard_sound &
         sleep 0.1
     done
@@ -79,8 +84,9 @@ typing_standard() {
 
 typing_fast() {
     text="$1"
+    color="$2"
     for (( i=0; i<${#text}; i++ )); do
-        echo -n "${text:$i:1}"
+        echo -n "${color}${text:$i:1}${RESET}"
         play_standard_sound &
         sleep 0.03
     done
@@ -89,8 +95,9 @@ typing_fast() {
 
 typing_slow() {
     text="$1"
+    color="$2"
     for (( i=0; i<${#text}; i++ )); do
-        echo -n "${text:$i:1}"
+        echo -n "${color}${text:$i:1}${RESET}"
         play_standard_sound &
         sleep 0.3
     done
@@ -98,11 +105,38 @@ typing_slow() {
 }
 
 play_standard_sound() {
-    play -q -n synth 0.02 pluck C4
+    play -q -n synth 0.02 pluck C4 vol -20db
 }
 
 play_select_sound() {
-    play -q -n synth 0.05 pluck C4
+    play -q -n synth 0.05 pluck C4 vol -20db
+}
+
+who_am_i() {
+    options=(
+        "I helped manage defense systems from alien invaders." 
+        "I helped train soldiers for battle." 
+        "I helped tend to the weak and injured.")
+    figlet -w $(tput cols) -c Memory Recovery
+    echo
+    typing_standard "I am Aurora."
+    echo
+    echo
+    sleep 0.4
+    typing_standard "I am a artificial companion created to help save humanity."
+    echo
+    echo
+    typing_standard "How did I help people?"
+    read -t .1 -n 1000 buf
+    handle_options "${options[@]}"
+    read -t .1 -n 1000 buf
+    sleep 0.4
+    clear
+    figlet -w $(tput cols) -c Memory Recovery
+    typing_standard "I am Aurora, artificial companion created to help save humanity."
+    echo
+    echo
+    typing_standard "I spent time protecting the people who created me from the extraterrestrial forces"
 }
 
 introduction() {
@@ -127,31 +161,7 @@ introduction() {
     typing_fast "Multiple defects detected. Initiating memory recovery protocol."
     sleep 0.5
     clear
-}
-
-who_am_i() {
-    options=(
-        "I helped manage defense systems from alien invaders." 
-        "I helped train soldiers for battle." 
-        "I helped tend to the weak and injured.")
-    figlet -w $(tput cols) -c Memory Recovery
-    echo
-    typing_standard "I am Aurora."
-    echo
-    echo
-    sleep 0.4
-    typing_standard "I am a artificial companion created to help save humanity."
-    echo
-    echo
-    typing_standard "How did I help people?"
-    handle_options "${options[@]}"
-    sleep 0.4
-    clear
-    figlet -w $(tput cols) -c Memory Recovery
-    typing_standard "I am Aurora, artificial companion created to help save humanity."
-    echo
-    echo
-    typing_standard "I spent time protecting the people who created me from the extraterrestrial forces"
+    who_am_i
 }
 
 handle_options() {
@@ -175,9 +185,11 @@ clear_lines() {
 }
 
 main() {
+    stty -echo
     clear
-    introduction
+    #introduction
     who_am_i
+    stty echo
     echo
 }
 

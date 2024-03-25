@@ -142,7 +142,7 @@ fate_two() {
     typing_standard "[AURORA] - Expression of gratitude." $AURORA
     echo
     echo
-    typing_standard "Raven proceeds to wipe the memory of Aurora and all the existence of Dr. Reeve. Aurora no longer has to remember the pain of losing Dr. reeve" $NARRATOR
+    typing_standard "Raven proceeds to wipe the memory of Aurora and all the existence of Dr. Reeve. Aurora no longer has to remember the pain of losing Dr. Reeve" $NARRATOR
     sleep 4
     clear
     figlet -w $(tput cols) -c Aurora Memory Lost
@@ -156,7 +156,7 @@ fate_one() {
     typing_standard "[AURORA] - Expression of gratitude." $AURORA
     echo
     echo
-    typing_standard "Raven proceeds to take out the power supply unit from Aurora, leaving Aurora as a hunk of medal on the ground." $NARRATOR
+    typing_standard "Raven proceeds to take out the power supply unit from Aurora, leaving Aurora as a hunk of metal on the ground." $NARRATOR
     sleep 4
     clear
     figlet -w $(tput cols) -c Aurora Disposed
@@ -172,7 +172,7 @@ decide_fate() {
     typing_slow "[AURORA] - ...." $AURORA
     echo
     echo
-    typing_slow "[AURORA] - Why did Dr. Reeve save me at the expense of his own life." $AURORA
+    typing_slow "[AURORA] - Why did Dr. Reeve save me at the expense of his own life?" $AURORA
     echo
     echo
     typing_standard "[AURORA] - As Aurora, my purpose was to save and support humanity." $AURORA
@@ -616,6 +616,7 @@ how_the_humans_fair() {
 
 defend_creators() {
     typing_standard "[AURORA] - I was tasked with defending my human creators. I was to provide tactical and combat support on the " $AURORA
+    echo
     typing_standard "           battlefields to help defend against the alien invaders." $AURORA
 }
 
